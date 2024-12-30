@@ -1,0 +1,16 @@
+FROM golang:1.22.2-alpine
+
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
+COPY . .
+
+RUN go build -o /user_service ./cmd/server
+
+EXPOSE 50051
+
+CMD [ "/user_service" ]
+

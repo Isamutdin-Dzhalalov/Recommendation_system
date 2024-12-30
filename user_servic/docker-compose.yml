@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  user_service:
+    build: .
+    ports:
+      - "50051:50051"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=isamutdin
+      - DB_PASSWORD=a
+      - DB_NAME=recommendation_system
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: isamutdin
+      POSTGRES_PASSWORD: a
+      POSTGRES_DB: recommendation_system
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
