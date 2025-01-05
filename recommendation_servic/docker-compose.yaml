@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  user_service:
+    build: ../user_servic
+    ports:
+      - "50051:50051"
+    depends_on:
+      - nats
+
+  recommendation_servic:
+    build: ../recommendation_servic
+    ports:
+      - "50052:50052"
+    depends_on:
+      - nats
+      - postgres
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: a
+      POSTGRES_DB: recommendation_system
+    ports:
+      - "5433:5432"

@@ -7,6 +7,5 @@ import (
 )
 
 func NewConnection(connStr string) (*sql.DB, error) {
-
 	return sql.Open("postgres", connStr)
 }
