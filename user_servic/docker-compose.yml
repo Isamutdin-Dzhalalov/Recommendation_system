@@ -12,6 +12,15 @@ services:
       - DB_NAME=recommendation_system
     depends_on:
       - postgres
+      - nats
+
+  recommendation_service:
+    build: ./recommendation_service
+    ports:
+      - "50052:50052"
+    depend_on:
+      - nats
+      - postgres
 
   postgres:
     image: postgres:15
@@ -24,6 +33,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
 
 volumes:
   postgres_data:
